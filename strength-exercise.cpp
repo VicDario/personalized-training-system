@@ -1,0 +1,7 @@
+#include <iostream>
+#include "strength-exercise.h"
+
+using namespace std;
+
+StrengthExercise::StrengthExercise(int id, string name, string description, int intensity, int durationMinutes)
+    : Exercise(id, name, description, intensity, durationMinutes) {}
