@@ -3,5 +3,5 @@
 
 using namespace std;
 
-StrengthExercise::StrengthExercise(int id, string name, string description, int intensity, int durationMinutes)
+StrengthExercise::StrengthExercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes)
     : Exercise(id, name, description, intensity, durationMinutes) {}

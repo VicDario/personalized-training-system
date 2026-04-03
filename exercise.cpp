@@ -1,7 +1,7 @@
 #include <iostream>
 #include "exercise.h"
 
-Exercise::Exercise(int id, string name, string description, int intensity, int durationMinutes)
+Exercise::Exercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes)
 {
     this->id = id;
     this->name = name;
@@ -26,7 +26,7 @@ string Exercise::getDescription() const
     return description;
 }
 
-int Exercise::getIntensity() const
+ExerciseIntensity Exercise::getIntensity() const
 {
     return intensity;
 }
@@ -52,7 +52,7 @@ void Exercise::setDescription(string description)
     this->description = description;
 }
 
-void Exercise::setIntensity(int intensity)
+void Exercise::setIntensity(ExerciseIntensity intensity)
 {
     this->intensity = intensity;
 }
