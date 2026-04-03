@@ -31,6 +31,22 @@ ExerciseIntensity Exercise::getIntensity() const
     return intensity;
 }
 
+string Exercise::getIntensityName() const
+{
+    switch (intensity) {
+        case BASIC:
+            return "Basico";
+        case INTERMEDIATE:
+            return "Intermedio";
+        case ADVANCED:
+            return "Avanzado";
+        case HIGH_PERFORMANCE:
+            return "Alto Rendimiento";
+        default:
+            return "Desconocido";
+    }
+}
+
 int Exercise::getDurationMinutes() const
 {
     return durationMinutes;
