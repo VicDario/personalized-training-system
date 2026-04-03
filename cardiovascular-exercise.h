@@ -7,4 +7,5 @@ class CardiovascularExercise : public Exercise
 {
 public:
     CardiovascularExercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes);
+    ~CardiovascularExercise();
 };

@@ -10,6 +10,8 @@ Exercise::Exercise(int id, string name, string description, ExerciseIntensity in
     this->durationMinutes = durationMinutes;
 }
 
+Exercise::~Exercise() {}
+
 // Getters
 int Exercise::getId() const
 {
@@ -33,17 +35,18 @@ ExerciseIntensity Exercise::getIntensity() const
 
 string Exercise::getIntensityName() const
 {
-    switch (intensity) {
-        case BASIC:
-            return "Basico";
-        case INTERMEDIATE:
-            return "Intermedio";
-        case ADVANCED:
-            return "Avanzado";
-        case HIGH_PERFORMANCE:
-            return "Alto Rendimiento";
-        default:
-            return "Desconocido";
+    switch (intensity)
+    {
+    case BASIC:
+        return "Basico";
+    case INTERMEDIATE:
+        return "Intermedio";
+    case ADVANCED:
+        return "Avanzado";
+    case HIGH_PERFORMANCE:
+        return "Alto Rendimiento";
+    default:
+        return "Desconocido";
     }
 }
 

@@ -15,6 +15,7 @@ private:
 
 public:
     Exercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes);
+    virtual ~Exercise();
 
     // Getters
     int getId() const;
