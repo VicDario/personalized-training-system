@@ -1,31 +1,40 @@
-#include <iostream>
 #pragma once
-
+#include <iostream>
+#include <string>
 using namespace std;
 
-class Exercise
-{
-private:
-    int id;
+class Exercise {
+protected:
+    string code;
     string name;
-    string description;
-    int intensity;
+    string type;
+    string intensity;
     int durationMinutes;
+    string description;
+    int weekUsed;  // week last used (0 = never)
 
 public:
-    Exercise(int id, string name, string description, int intensity, int durationMinutes);
-
-    // Getters
-    int getId() const;
-    string getName() const;
-    string getDescription() const;
-    int getIntensity() const;
-    int getDurationMinutes() const;
+    Exercise();
+    virtual ~Exercise();
 
     // Setters
-    void setId(int id);
+    void setCode(string code);
     void setName(string name);
+    void setType(string type);
+    void setIntensity(string intensity);
+    void setDurationMinutes(int duration);
     void setDescription(string description);
-    void setIntensity(int intensity);
-    void setDurationMinutes(int durationMinutes);
+    void setWeekUsed(int week);
+
+    // Getters
+    string getCode();
+    string getName();
+    string getType();
+    string getIntensity();
+    int getDurationMinutes();
+    string getDescription();
+    int getWeekUsed();
+
+    virtual void inputData();
+    virtual void displayData();
 };
