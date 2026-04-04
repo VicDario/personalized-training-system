@@ -3,15 +3,15 @@
 #include "exercise.h"
 #include "workout-routine.h"
 
-class system {
+class System {
     private: 
     std::vector<Exercise*> exercises;
     
 
     public: 
     void ejecutar(); 
-    system(); 
-    ~system();
+    System(); 
+    ~System();
 
     private: 
     void createExercise();
