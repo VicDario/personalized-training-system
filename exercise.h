@@ -1,6 +1,6 @@
+#pragma once
 #include <iostream>
 #include "exercise-intensity.h"
-#pragma once
 
 using namespace std;
 

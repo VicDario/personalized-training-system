@@ -5,11 +5,7 @@ using namespace std;
 
 WorkoutRoutine::WorkoutRoutine() {}
 
-WorkoutRoutine::~WorkoutRoutine()
-{
-    for (Exercise *exercise : exercises)
-        delete exercise;
-}
+WorkoutRoutine::~WorkoutRoutine(){ exercises.clear(); }
 
 int WorkoutRoutine::getTotalDuration() const
 {
@@ -21,7 +17,23 @@ int WorkoutRoutine::getTotalDuration() const
     return totalDuration;
 }
 
+int WorkoutRoutine::getLastWeekUsed() const
+{
+    return lastWeekUsed;
+}
+
+
+void WorkoutRoutine::setLastWeekUsed(int week)
+{
+    lastWeekUsed = week;
+}
+
 void WorkoutRoutine::addExercise(Exercise *exercise)
 {
     exercises.push_back(exercise);
+}
+
+vector<Exercise*> WorkoutRoutine::getExercisesInfo() const
+{
+    return exercises;
 }

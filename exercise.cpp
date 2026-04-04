@@ -80,3 +80,4 @@ void Exercise::setDurationMinutes(int durationMinutes)
 {
     this->durationMinutes = durationMinutes;
 }
+
