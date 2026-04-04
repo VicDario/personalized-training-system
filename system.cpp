@@ -72,7 +72,7 @@ void system::displayExercises(){
     }else {
         cout << "Lista de ejercicios:" << endl;
         for (const Exercise* exercise : exercises) {
-            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName() 
+            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName() << endl;
         }
     }
 
