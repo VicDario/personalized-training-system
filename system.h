@@ -2,26 +2,26 @@
 #include <vector>
 #include "exercise.h"
 #include "workout-routine.h"
+#pragma once
 
-class System {
-    private: 
-    std::vector<Exercise*> exercises;
-    
+using namespace std;
 
-    public: 
-    void ejecutar(); 
-    System(); 
+class System
+{
+private:
+    vector<Exercise *> exercises;
+
+public:
+    System();
     ~System();
+    void start();
 
-    private: 
+private:
     void createExercise();
     void deleteExercise();
     void displayExercises();
-    void getExcerciseInfo(); 
+    void getExerciseInfo();
     void updateExercise();
-    void findExcerciseByIntensity(); 
+    void findExerciseByIntensity();
     void createWorkoutRoutines();
-
-
-
 };
