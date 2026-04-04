@@ -1,18 +1,20 @@
 #include <iostream>
 #include <vector>
 #include "exercise.h"
+#pragma once
 
 using namespace std;
 
-class WorkoutRoutine {
-    private:
-        vector<Exercise*> exercises;
+class WorkoutRoutine
+{
+private:
+    vector<Exercise *> exercises;
 
-    public:
-        WorkoutRoutine();
-        ~WorkoutRoutine();
+public:
+    WorkoutRoutine();
+    ~WorkoutRoutine();
 
-        int getTotalDuration() const;
+    int getTotalDuration() const;
 
-        void addExercise(Exercise* exercise);
+    void addExercise(Exercise *exercise);
 };
