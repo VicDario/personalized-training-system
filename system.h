@@ -18,7 +18,7 @@ class System {
     void deleteExercise();
     void displayExercises();
     void getExcerciseInfo(); 
-    void updateExcersise();
+    void updateExercise();
     void findExcerciseByIntensity(); 
     void createWorkoutRoutines();
 
