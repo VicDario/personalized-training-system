@@ -5,7 +5,7 @@ using namespace std;
 
 class StrengthExercise : public Exercise {
 private:
-    double weightKg;  // suggested weight in kilograms
+    double weightKg;  // peso sugerido en kilogramos
 public:
     StrengthExercise();
     void setWeight(double weight);

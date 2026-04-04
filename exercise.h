@@ -11,13 +11,13 @@ protected:
     string intensity;
     int durationMinutes;
     string description;
-    int weekUsed;  // week last used (0 = never)
+    int weekUsed;  // semana en que fue usado por ultima vez (0 = nunca)
 
 public:
     Exercise();
     virtual ~Exercise();
 
-    // Setters
+    // Modificadores
     void setCode(string code);
     void setName(string name);
     void setType(string type);
@@ -26,7 +26,7 @@ public:
     void setDescription(string description);
     void setWeekUsed(int week);
 
-    // Getters
+    // Consultores
     string getCode();
     string getName();
     string getType();

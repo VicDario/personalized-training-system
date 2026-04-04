@@ -5,7 +5,7 @@ using namespace std;
 
 class CardiovascularExercise : public Exercise {
 private:
-    int heartRate;  // recommended beats per minute
+    int heartRate;  // pulsaciones por minuto recomendadas
 public:
     CardiovascularExercise();
     void setHeartRate(int rate);

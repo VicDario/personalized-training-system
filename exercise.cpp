@@ -16,7 +16,7 @@ Exercise::~Exercise() {
     cout << "[destroyed] " << name << endl;
 }
 
-// Setters
+// Modificadores
 void Exercise::setCode(string code)             { this->code = code; }
 void Exercise::setName(string name)             { this->name = name; }
 void Exercise::setType(string type)             { this->type = type; }
@@ -25,7 +25,7 @@ void Exercise::setDurationMinutes(int duration) { this->durationMinutes = durati
 void Exercise::setDescription(string description) { this->description = description; }
 void Exercise::setWeekUsed(int week)            { this->weekUsed = week; }
 
-// Getters
+// Consultores
 string Exercise::getCode()           { return this->code; }
 string Exercise::getName()           { return this->name; }
 string Exercise::getType()           { return this->type; }
