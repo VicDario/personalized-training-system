@@ -117,7 +117,7 @@ void system::getExcerciseInfo() {
     cout << "No se encontro un ejercicio con ese ID." << endl;
 }
 
-void system::updateExercise() {
+void system::updateExcersise() {
     int idToUpdate;
     cout << "Ingrese el ID del ejercicio que desea actualizar: ";
     if (!(cin >> idToUpdate)) { 
