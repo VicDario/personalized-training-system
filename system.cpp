@@ -211,6 +211,7 @@ void System::createWorkoutRoutine()
                 continue;
 
             newRoutine->addExercise(exercise);
+            exercise->setLastUsedWeek(week);
         }
     }
     else
@@ -238,6 +239,7 @@ void System::createWorkoutRoutine()
                 continue;
 
             newRoutine->addExercise(exercise);
+            exercise->setLastUsedWeek(week);
         }
     }
 
