@@ -231,6 +231,12 @@ void System::findExerciseByIntensity()
 
 void System::createWorkoutRoutine()
 {
+    if (exercises.empty())
+    {
+        cout << "No hay ejercicios disponibles para crear una rutina." << endl;
+        return;
+    }
+    
     int week = this->currentWeek++;
     WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
 
@@ -243,11 +249,6 @@ void System::createWorkoutRoutine()
 
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
 
-    if (exercises.empty())
-    {
-        cout << "No hay ejercicios disponibles para crear una rutina." << endl;
-        return;
-    }
 
     // Si no hay ejercicios usados la semana pasada
     // llenamos la rutina con los primeros ejercicios disponibles que coincidan con la intensidad solicitada
