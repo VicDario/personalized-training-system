@@ -9,21 +9,20 @@ class WorkoutRoutine
 {
 private:
     vector<Exercise *> exercises;
-    int lastWeekUsed; // Para llevar un registro de la última semana en que se usó esta rutina
+    int week;
 
 public:
-    WorkoutRoutine();
+    WorkoutRoutine(int week);
     ~WorkoutRoutine();
 
+    // Getters
     int getTotalDuration() const;
-    int getLastWeekUsed() const;
+    int getWeek() const;
 
+    // Setters
+    void setWeek(int week);
 
     void addExercise(Exercise *exercise);
 
-    vector<Exercise*> getExercisesInfo() const;
-
-    void setLastWeekUsed(int week); 
-
-
+    const vector<Exercise*>& getExercisesInfo() const;
 };

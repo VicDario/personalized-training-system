@@ -3,9 +3,13 @@
 
 using namespace std;
 
-WorkoutRoutine::WorkoutRoutine() {}
+WorkoutRoutine::WorkoutRoutine(int week)
+{
+    this->week = week;
+    this->exercises = vector<Exercise *>();
+}
 
-WorkoutRoutine::~WorkoutRoutine(){ exercises.clear(); }
+WorkoutRoutine::~WorkoutRoutine() { exercises.clear(); }
 
 int WorkoutRoutine::getTotalDuration() const
 {
@@ -17,23 +21,23 @@ int WorkoutRoutine::getTotalDuration() const
     return totalDuration;
 }
 
-int WorkoutRoutine::getLastWeekUsed() const
-{
-    return lastWeekUsed;
-}
-
-
-void WorkoutRoutine::setLastWeekUsed(int week)
-{
-    lastWeekUsed = week;
-}
-
 void WorkoutRoutine::addExercise(Exercise *exercise)
 {
     exercises.push_back(exercise);
 }
 
-const vector<Exercise*>& WorkoutRoutine::getExercisesInfo() const
+const vector<Exercise *> &WorkoutRoutine::getExercisesInfo() const
 {
     return exercises;
+}
+
+void WorkoutRoutine::setWeek(int week)
+{
+    this->week = week;
+}
+
+
+int WorkoutRoutine::getWeek() const
+{
+    return week;
 }
