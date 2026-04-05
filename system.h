@@ -10,6 +10,9 @@ class System
 {
 private:
     vector<Exercise *> exercises;
+    vector<Client *> clients;
+    vector<WorkoutRoutine *> allRoutines; // Historial global
+    int currentWeek;
 
 public:
     System();
@@ -24,4 +27,5 @@ private:
     void updateExercise();
     void findExerciseByIntensity();
     void createWorkoutRoutines();
+    bool findClient(int id);
 };

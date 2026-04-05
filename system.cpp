@@ -4,6 +4,7 @@
 #include "workout-routine.h"
 #include "cardiovascular-exercise.h"
 #include "strength-exercise.h"
+#include "client.h"
 
 using namespace std;
 
@@ -249,6 +250,40 @@ void System::findExerciseByIntensity()
     }
 }
 
+bool System::findClient(int id)
+{
+    for (Client *client : clients)
+    {
+        if (client->getId() == id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void System::createWorkoutRoutines()
 {
+    int idCliente;
+    int currentWeek;
+    bool clienteFound = false;
+
+    do
+    {
+        cout << "Ingrese el ID del cliente para crear una rutina de entrenamiento: ";
+        cin >> idCliente;
+    } while (cin.fail() || !findClient(idCliente));
+
+    do
+    {
+        cout << "Ingrese la semana actual (número entero): ";
+        cin >> currentWeek;
+    } while (cin.fail() || currentWeek < 1);
+
+
+
+
+
+
+
 }
