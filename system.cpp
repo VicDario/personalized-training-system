@@ -253,16 +253,6 @@ void System::createWorkoutRoutine()
     // llenamos la rutina con los primeros ejercicios disponibles que coincidan con la intensidad solicitada
     if (exercisesUsedLastWeek.empty())
     {
-        for (Exercise *exercise : exercises) {
-            if (newRoutine->getExercisesInfo().size() == amountExercises)
-                break;
-            
-            if (exercise->getIntensity() != intensity)
-                continue;
-            
-            newRoutine->addExercise(exercise);
-        }
-    } else {
         for (Exercise *exercise : exercises)
         {
             if (newRoutine->getExercisesInfo().size() == amountExercises)
@@ -270,9 +260,22 @@ void System::createWorkoutRoutine()
 
             if (exercise->getIntensity() != intensity)
                 continue;
-            
+
+            newRoutine->addExercise(exercise);
+        }
+    }
+    else
+    {
+        for (Exercise *exercise : exercises)
+        {
+            if (newRoutine->getExercisesInfo().size() == amountExercises)
+                break;
+
+            if (exercise->getIntensity() != intensity)
+                continue;
+
             bool alreadyUsed = false;
-            
+
             for (Exercise *used : exercisesUsedLastWeek)
             {
                 if (exercise->getId() == used->getId())
@@ -284,7 +287,7 @@ void System::createWorkoutRoutine()
 
             if (alreadyUsed)
                 continue;
-                
+
             newRoutine->addExercise(exercise);
         }
     }
