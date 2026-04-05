@@ -81,13 +81,10 @@ void System::displayExercises()
         cout << "No hay ejercicios disponibles." << endl;
         return;
     }
-    else
-    {
-        cout << "Lista de ejercicios:" << endl;
-        for (const Exercise *exercise : exercises)
-            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName() << endl;
-        // cout << exercise->getDescription() << endl;
-    }
+
+    cout << "Lista de ejercicios:" << endl;
+    for (const Exercise *exercise : exercises)
+        exercise->showSummary();
 }
 
 void System::deleteExercise()

@@ -75,3 +75,10 @@ void Exercise::displayInfo() const
     cout << "Intensidad: " << Helper::getIntensityName(intensity) << endl;
     cout << "Duración: " << durationMinutes << " minutos" << endl;
 }
+
+void Exercise::showSummary() const
+{
+    cout << "ID: " << id;
+    cout << ", Nombre: " << name;
+    cout << ", Intensidad: " << Helper::getIntensityName(intensity) << endl;
+}

@@ -33,4 +33,5 @@ public:
     void setDurationMinutes(int durationMinutes);
 
     virtual void displayInfo() const;
+    void showSummary() const;
 };
