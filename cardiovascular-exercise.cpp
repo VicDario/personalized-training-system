@@ -41,5 +41,5 @@ void CardiovascularExercise::displayInfo() const
 {
     cout << "Información del ejercicio cardiovascular:" << endl;
     Exercise::displayInfo();
-    cout << "Duración: " << getDurationMinutes() << " minutos" << endl;
+    cout << "Pulso cardiaco recomendado: " << recommendedHeartRate << " bpm" << endl;
 }
