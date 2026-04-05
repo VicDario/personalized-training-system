@@ -252,11 +252,16 @@ void System::createWorkoutRoutine()
         return;
     }
 
+    // Si no hay ejercicios usados la semana pasada, llenamos la rutina con los primeros ejercicios disponibles
     if (exercisesUsedLastWeek.empty())
     {
         for (Exercise *exercise : exercises) {
             if (newRoutine->getExercisesInfo().size() == amountExercises)
                 break;
+            
+            if (exercise->getIntensity() != intensity)
+                continue;
+            
             newRoutine->addExercise(exercise);
         }
     } else {
