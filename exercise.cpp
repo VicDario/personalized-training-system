@@ -34,8 +34,6 @@ ExerciseIntensity Exercise::getIntensity() const
     return intensity;
 }
 
-
-
 int Exercise::getDurationMinutes() const
 {
     return durationMinutes;
@@ -111,4 +109,4 @@ void Exercise::updateExercise()
     cin >> newDuration;
     if (newDuration > 0)
         setDurationMinutes(newDuration);
-}   
+}

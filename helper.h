@@ -3,7 +3,8 @@
 
 using namespace std;
 
-class Helper {
+class Helper
+{
 public:
     static ExerciseIntensity getExerciseIntensityFromUser();
     static string getIntensityName(ExerciseIntensity intensity);

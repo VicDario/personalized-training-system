@@ -24,5 +24,5 @@ public:
 
     void addExercise(Exercise *exercise);
 
-    const vector<Exercise*>& getExercisesInfo() const;
+    const vector<Exercise *> &getExercisesInfo() const;
 };

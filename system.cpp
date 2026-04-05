@@ -41,6 +41,11 @@ System::~System()
     {
         delete exercise;
     }
+
+    for (WorkoutRoutine *routine : workoutRoutines)
+    {
+        delete routine;
+    }
 }
 
 void System::createExercise()
@@ -180,16 +185,17 @@ void System::createWorkoutRoutine()
         return;
     }
 
-    int week = this->currentWeek++;
+    int week = this->currentWeek;
     WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
 
     vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
 
-    cout << endl << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
+    cout << endl
+         << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
     int amountExercises;
     cin.clear();
     cin >> amountExercises;
-    
+
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
 
     // Si no hay ejercicios usados la semana pasada
@@ -236,7 +242,7 @@ void System::createWorkoutRoutine()
     }
 
     cout << endl;
-    
+
     if (newRoutine->getExercisesInfo().size() < amountExercises)
     {
         int missingExercises = amountExercises - newRoutine->getExercisesInfo().size();
@@ -248,6 +254,7 @@ void System::createWorkoutRoutine()
     }
 
     workoutRoutines.push_back(newRoutine);
+    this->currentWeek++;
     cout << "Rutina de entrenamiento para la semana " << week << endl;
     cout << "Duración total: " << newRoutine->getTotalDuration() << " minutos" << endl;
 
@@ -257,13 +264,12 @@ void System::createWorkoutRoutine()
         exercise->displayInfo();
         cout << "-----------------------------" << endl;
     }
-
     cout << endl;
 }
 
 void System::start()
 {
-    
+
     int option;
     do
     {
