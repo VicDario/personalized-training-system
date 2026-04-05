@@ -13,6 +13,7 @@ public:
     ~StrengthExercise();
 
     void displayInfo() const override;
+    void updateExercise() override;
 
     static StrengthExercise *createStrengthExercise(int id);
 };

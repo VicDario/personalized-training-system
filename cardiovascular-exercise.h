@@ -13,6 +13,7 @@ public:
     ~CardiovascularExercise();
 
     void displayInfo() const override;
+    void updateExercise() override;
 
     static CardiovascularExercise *createCardiovascularExercise(int id);
 };

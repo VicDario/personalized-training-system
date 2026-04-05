@@ -43,3 +43,15 @@ void CardiovascularExercise::displayInfo() const
     Exercise::displayInfo();
     cout << "Pulso cardiaco recomendado: " << recommendedHeartRate << " bpm" << endl;
 }
+
+void CardiovascularExercise::updateExercise()
+{
+    Exercise::updateExercise();
+
+    cout << "Ingrese la nueva frecuencia cardíaca recomendada (actual: " << recommendedHeartRate << " bpm): ";
+    int newHeartRate;
+    cin.clear();
+    cin >> newHeartRate;
+    if (newHeartRate > 0)
+        recommendedHeartRate = newHeartRate;
+}

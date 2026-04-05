@@ -42,3 +42,15 @@ StrengthExercise *StrengthExercise::createStrengthExercise(int id)
 
     return new StrengthExercise(id, name, description, intensity, duration, weight);
 }
+
+void StrengthExercise::updateExercise()
+{
+    Exercise::updateExercise();
+
+    cout << "Ingrese el nuevo peso recomendado para el ejercicio (actual: " << weight << " kg): ";
+    int newWeight;
+    cin.clear();
+    cin >> newWeight;
+    if (newWeight > 0)
+        weight = newWeight;
+}

@@ -137,67 +137,12 @@ void System::updateExercise()
         cout << "ID inválido." << endl;
         return;
     }
-    cin.ignore(1000, '\n'); // Limpiar buffer para los getline
 
     for (Exercise *exercise : exercises)
     {
         if (exercise->getId() == idToUpdate)
         {
-            string input;
-
-            cout << "Actualizando ejercicio ID: " << idToUpdate << endl;
-
-            // 1. NOMBRE
-            cout << "Nuevo nombre (Actual: " << exercise->getName() << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-                exercise->setName(input);
-
-            // 2. DESCRIPCIÓN
-            cout << "Nueva descripción (Actual: " << exercise->getDescription() << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-                exercise->setDescription(input);
-
-            // 3. DURACIÓN (Leemos como string para validar el Enter)
-            cout << "Nueva duración (Actual: " << exercise->getDurationMinutes() << " min) [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-            {
-                try
-                {
-                    exercise->setDurationMinutes(stoi(input));
-                }
-                catch (...)
-                {
-                    cout << "Valor no numérico. Se mantiene el anterior." << endl;
-                }
-            }
-
-            // 4. INTENSIDAD
-            cout << "Nueva intensidad (1. Basica, 2. Intermedia, 3. Avanzada, 4. Alta-Performance)\n";
-            cout << "(Actual: " << Helper::getIntensityName(exercise->getIntensity()) << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-            {
-                try
-                {
-                    int op = stoi(input);
-                    if (op >= 1 && op <= 4)
-                    {
-                        exercise->setIntensity(static_cast<ExerciseIntensity>(op - 1));
-                    }
-                    else
-                    {
-                        cout << "Opción fuera de rango. Se mantiene el anterior." << endl;
-                    }
-                }
-                catch (...)
-                {
-                    cout << "Entrada inválida. Se mantiene el anterior." << endl;
-                }
-            }
-
+            exercise->updateExercise();
             cout << "\n¡Ejercicio actualizado con éxito!" << endl;
             return;
         }

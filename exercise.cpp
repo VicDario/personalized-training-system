@@ -82,3 +82,33 @@ void Exercise::showSummary() const
     cout << ", Nombre: " << name;
     cout << ", Intensidad: " << Helper::getIntensityName(intensity) << endl;
 }
+
+void Exercise::updateExercise()
+{
+    cout << "Actualizando ejercicio ID: " << id << endl;
+
+    cout << "Ingrese el nuevo nombre (actual: " << name << "): ";
+    string newName;
+    cin.ignore(1000, '\n');
+    cin.clear();
+    getline(cin, newName);
+    if (!newName.empty())
+        setName(newName);
+
+    cout << "Ingrese la nueva descripción (actual: " << description << "): ";
+    string newDescription;
+    cin.clear();
+    getline(cin, newDescription);
+    if (!newDescription.empty())
+        setDescription(newDescription);
+
+    cout << "Seleccione la nueva intensidad (actual: " << Helper::getIntensityName(intensity) << "):" << endl;
+    ExerciseIntensity newIntensity = Helper::getExerciseIntensityFromUser();
+    setIntensity(newIntensity);
+
+    cout << "Ingrese la nueva duración en minutos (actual: " << durationMinutes << "): ";
+    int newDuration;
+    cin >> newDuration;
+    if (newDuration > 0)
+        setDurationMinutes(newDuration);
+}   
