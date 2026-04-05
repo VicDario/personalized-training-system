@@ -41,6 +41,11 @@ System::~System()
     {
         delete exercise;
     }
+
+    for (WorkoutRoutine *routine : workoutRoutines)
+    {
+        delete routine;
+    }
 }
 
 void System::createExercise()
