@@ -2,7 +2,6 @@
 #include <vector>
 #include "exercise.h"
 #include "workout-routine.h"
-#pragma once
 
 using namespace std;
 
@@ -10,8 +9,7 @@ class System
 {
 private:
     vector<Exercise *> exercises;
-    vector<Client *> clients;
-    vector<WorkoutRoutine *> allRoutines; // Historial global
+    vector<WorkoutRoutine *> workoutRoutines;
     int currentWeek;
 
 public:
@@ -21,11 +19,10 @@ public:
 
 private:
     void createExercise();
+    void updateExercise();
     void deleteExercise();
     void displayExercises();
     void getExerciseInfo();
-    void updateExercise();
     void findExerciseByIntensity();
-    void createWorkoutRoutines();
-    bool findClient(int id);
+    void createWorkoutRoutine();
 };
