@@ -75,7 +75,6 @@ void System::createExercise()
 
 void System::displayExercises()
 {
-
     if (exercises.empty())
     {
         cout << "No hay ejercicios disponibles." << endl;
@@ -89,7 +88,6 @@ void System::displayExercises()
 
 void System::deleteExercise()
 {
-
     int idToDelete;
     cout << "Ingrese el ID del ejercicio que desea eliminar: ";
     cin >> idToDelete;
@@ -236,19 +234,18 @@ void System::createWorkoutRoutine()
         cout << "No hay ejercicios disponibles para crear una rutina." << endl;
         return;
     }
-    
+
     int week = this->currentWeek++;
     WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
 
     vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
 
-    cout << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
+    cout << endl << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
     int amountExercises;
     cin.clear();
     cin >> amountExercises;
-
+    
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
-
 
     // Si no hay ejercicios usados la semana pasada
     // llenamos la rutina con los primeros ejercicios disponibles que coincidan con la intensidad solicitada
@@ -293,6 +290,8 @@ void System::createWorkoutRoutine()
         }
     }
 
+    cout << endl;
+    
     if (newRoutine->getExercisesInfo().size() < amountExercises)
     {
         int missingExercises = amountExercises - newRoutine->getExercisesInfo().size();
@@ -313,14 +312,17 @@ void System::createWorkoutRoutine()
         exercise->displayInfo();
         cout << "-----------------------------" << endl;
     }
+
+    cout << endl;
 }
 
 void System::start()
 {
+    
     int option;
-
     do
     {
+        Helper::cleanTerminal();
         cout << "\n--- Menú Principal ---" << endl;
         cout << "1. Crear ejercicio" << endl;
         cout << "2. Mostrar ejercicios" << endl;
@@ -332,6 +334,8 @@ void System::start()
         cout << "0. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> option;
+
+        Helper::cleanTerminal();
 
         switch (option)
         {
@@ -363,5 +367,10 @@ void System::start()
             cout << "Opción no válida. Intente nuevamente." << endl;
             break;
         }
+
+        getchar();
+        cout << "Presione Enter para continuar...";
+        cin.clear();
+        cin.get();
     } while (option != 0);
 }
