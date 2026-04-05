@@ -1,5 +1,6 @@
 #include <iostream>
 #include "exercise.h"
+#include "helper.h"
 
 Exercise::Exercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes)
 {
@@ -33,22 +34,7 @@ ExerciseIntensity Exercise::getIntensity() const
     return intensity;
 }
 
-string Exercise::getIntensityName() const
-{
-    switch (intensity)
-    {
-    case BASIC:
-        return "Basico";
-    case INTERMEDIATE:
-        return "Intermedio";
-    case ADVANCED:
-        return "Avanzado";
-    case HIGH_PERFORMANCE:
-        return "Alto Rendimiento";
-    default:
-        return "Desconocido";
-    }
-}
+
 
 int Exercise::getDurationMinutes() const
 {
@@ -81,3 +67,11 @@ void Exercise::setDurationMinutes(int durationMinutes)
     this->durationMinutes = durationMinutes;
 }
 
+void Exercise::displayInfo() const
+{
+    cout << "ID: " << id << endl;
+    cout << "Nombre: " << name << endl;
+    cout << "Descripción: " << description << endl;
+    cout << "Intensidad: " << Helper::getIntensityName(intensity) << endl;
+    cout << "Duración: " << durationMinutes << " minutos" << endl;
+}
