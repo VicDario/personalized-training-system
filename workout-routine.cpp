@@ -33,7 +33,7 @@ void WorkoutRoutine::addExercise(Exercise *exercise)
     exercises.push_back(exercise);
 }
 
-vector<Exercise*> WorkoutRoutine::getExercisesInfo() const
+const vector<Exercise*>& WorkoutRoutine::getExercisesInfo() const
 {
     return exercises;
 }
