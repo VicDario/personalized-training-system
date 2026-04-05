@@ -1,6 +1,7 @@
 #pragma once
 
-enum ExerciseIntensity {
+enum ExerciseIntensity
+{
     BASIC,
     INTERMEDIATE,
     ADVANCED,

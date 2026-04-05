@@ -4,10 +4,12 @@
 
 using namespace std;
 
-ExerciseIntensity Helper::getExerciseIntensityFromUser() {
+ExerciseIntensity Helper::getExerciseIntensityFromUser()
+{
     int intensityOption;
 
-    do {
+    do
+    {
         cout << "Seleccione la intensidad del ejercicio:" << endl;
         cout << "1. Basica" << endl;
         cout << "2. Intermedia" << endl;
@@ -36,10 +38,11 @@ string Helper::getIntensityName(ExerciseIntensity intensity)
     }
 }
 
-void Helper::cleanTerminal() {
-    #if defined(_WIN32) || defined(_WIN64)
-        system("cls");
-    #else
-        system("clear");
-    #endif
+void Helper::cleanTerminal()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#else
+    system("clear");
+#endif
 }

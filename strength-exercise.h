@@ -9,7 +9,7 @@ private:
     int weight;
 
 public:
-    StrengthExercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes, int weight); 
+    StrengthExercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes, int weight);
     ~StrengthExercise();
 
     void displayInfo() const override;

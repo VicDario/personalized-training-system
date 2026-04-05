@@ -36,7 +36,6 @@ void WorkoutRoutine::setWeek(int week)
     this->week = week;
 }
 
-
 int WorkoutRoutine::getWeek() const
 {
     return week;
