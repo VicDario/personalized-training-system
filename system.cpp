@@ -231,7 +231,7 @@ void System::findExerciseByIntensity()
 
 void System::createWorkoutRoutine()
 {
-    int week = this->workoutRoutines.size() + 1;
+    int week = this->currentWeek++;
     WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
 
     vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
