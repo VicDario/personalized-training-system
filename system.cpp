@@ -75,24 +75,19 @@ void System::createExercise()
 
 void System::displayExercises()
 {
-
     if (exercises.empty())
     {
         cout << "No hay ejercicios disponibles." << endl;
         return;
     }
-    else
-    {
-        cout << "Lista de ejercicios:" << endl;
-        for (const Exercise *exercise : exercises)
-            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName() << endl;
-        // cout << exercise->getDescription() << endl;
-    }
+
+    cout << "Lista de ejercicios:" << endl;
+    for (const Exercise *exercise : exercises)
+        exercise->showSummary();
 }
 
 void System::deleteExercise()
 {
-
     int idToDelete;
     cout << "Ingrese el ID del ejercicio que desea eliminar: ";
     cin >> idToDelete;
@@ -108,7 +103,7 @@ void System::deleteExercise()
             exercises.erase(it);
 
             cout << "Ejercicio eliminado exitosamente." << endl;
-            return; // Salimos de la función inmediatamente
+            return;
         }
     }
     cout << "No se encontro un ejercicio con ese ID." << endl;
@@ -125,7 +120,7 @@ void System::getExerciseInfo()
         if (exercise->getId() == idToFind)
         {
             exercise->displayInfo();
-            return; // Salimos de la función inmediatamente
+            return;
         }
     }
     cout << "No se encontro un ejercicio con ese ID." << endl;
@@ -142,67 +137,12 @@ void System::updateExercise()
         cout << "ID inválido." << endl;
         return;
     }
-    cin.ignore(1000, '\n'); // Limpiar buffer para los getline
 
     for (Exercise *exercise : exercises)
     {
         if (exercise->getId() == idToUpdate)
         {
-            string input;
-
-            cout << "Actualizando ejercicio ID: " << idToUpdate << endl;
-
-            // 1. NOMBRE
-            cout << "Nuevo nombre (Actual: " << exercise->getName() << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-                exercise->setName(input);
-
-            // 2. DESCRIPCIÓN
-            cout << "Nueva descripción (Actual: " << exercise->getDescription() << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-                exercise->setDescription(input);
-
-            // 3. DURACIÓN (Leemos como string para validar el Enter)
-            cout << "Nueva duración (Actual: " << exercise->getDurationMinutes() << " min) [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-            {
-                try
-                {
-                    exercise->setDurationMinutes(stoi(input));
-                }
-                catch (...)
-                {
-                    cout << "Valor no numérico. Se mantiene el anterior." << endl;
-                }
-            }
-
-            // 4. INTENSIDAD
-            cout << "Nueva intensidad (1. Basica, 2. Intermedia, 3. Avanzada, 4. Alta-Performance)\n";
-            cout << "(Actual: " << Helper::getIntensityName(exercise->getIntensity()) << ") [Enter para mantener]: ";
-            getline(cin, input);
-            if (!input.empty())
-            {
-                try
-                {
-                    int op = stoi(input);
-                    if (op >= 1 && op <= 4)
-                    {
-                        exercise->setIntensity(static_cast<ExerciseIntensity>(op - 1));
-                    }
-                    else
-                    {
-                        cout << "Opción fuera de rango. Se mantiene el anterior." << endl;
-                    }
-                }
-                catch (...)
-                {
-                    cout << "Entrada inválida. Se mantiene el anterior." << endl;
-                }
-            }
-
+            exercise->updateExercise();
             cout << "\n¡Ejercicio actualizado con éxito!" << endl;
             return;
         }
@@ -234,32 +174,28 @@ void System::findExerciseByIntensity()
 
 void System::createWorkoutRoutine()
 {
-    int week = this->workoutRoutines.size() + 1;
-    WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
-
-    vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
-
-    cout << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
-    int amountExercises;
-    cin.clear();
-    cin >> amountExercises;
-
-    ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
-
     if (exercises.empty())
     {
         cout << "No hay ejercicios disponibles para crear una rutina." << endl;
         return;
     }
 
+    int week = this->currentWeek++;
+    WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
+
+    vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
+
+    cout << endl << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
+    int amountExercises;
+    cin.clear();
+    cin >> amountExercises;
+    
+    ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
+
+    // Si no hay ejercicios usados la semana pasada
+    // llenamos la rutina con los primeros ejercicios disponibles que coincidan con la intensidad solicitada
     if (exercisesUsedLastWeek.empty())
     {
-        for (Exercise *exercise : exercises) {
-            if (newRoutine->getExercisesInfo().size() == amountExercises)
-                break;
-            newRoutine->addExercise(exercise);
-        }
-    } else {
         for (Exercise *exercise : exercises)
         {
             if (newRoutine->getExercisesInfo().size() == amountExercises)
@@ -267,9 +203,22 @@ void System::createWorkoutRoutine()
 
             if (exercise->getIntensity() != intensity)
                 continue;
-            
+
+            newRoutine->addExercise(exercise);
+        }
+    }
+    else
+    {
+        for (Exercise *exercise : exercises)
+        {
+            if (newRoutine->getExercisesInfo().size() == amountExercises)
+                break;
+
+            if (exercise->getIntensity() != intensity)
+                continue;
+
             bool alreadyUsed = false;
-            
+
             for (Exercise *used : exercisesUsedLastWeek)
             {
                 if (exercise->getId() == used->getId())
@@ -281,29 +230,44 @@ void System::createWorkoutRoutine()
 
             if (alreadyUsed)
                 continue;
-                
+
             newRoutine->addExercise(exercise);
         }
     }
 
+    cout << endl;
+    
+    if (newRoutine->getExercisesInfo().size() < amountExercises)
+    {
+        int missingExercises = amountExercises - newRoutine->getExercisesInfo().size();
+        cout << "No hay ejercicios disponibles para la rutina con los criterios seleccionados." << endl;
+        cout << "Pruebe con otra intensidad o cantidad de ejercicios." << endl;
+        cout << "Ejercicios faltantes: " << missingExercises << endl;
+        delete newRoutine;
+        return;
+    }
 
     workoutRoutines.push_back(newRoutine);
     cout << "Rutina de entrenamiento para la semana " << week << endl;
     cout << "Duración total: " << newRoutine->getTotalDuration() << " minutos" << endl;
+
     for (const Exercise *exercise : newRoutine->getExercisesInfo())
     {
         cout << "-----------------------------" << endl;
         exercise->displayInfo();
         cout << "-----------------------------" << endl;
     }
+
+    cout << endl;
 }
 
 void System::start()
 {
+    
     int option;
-
     do
     {
+        Helper::cleanTerminal();
         cout << "\n--- Menú Principal ---" << endl;
         cout << "1. Crear ejercicio" << endl;
         cout << "2. Mostrar ejercicios" << endl;
@@ -315,6 +279,8 @@ void System::start()
         cout << "0. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> option;
+
+        Helper::cleanTerminal();
 
         switch (option)
         {
@@ -346,5 +312,10 @@ void System::start()
             cout << "Opción no válida. Intente nuevamente." << endl;
             break;
         }
+
+        getchar();
+        cout << "Presione Enter para continuar...";
+        cin.clear();
+        cin.get();
     } while (option != 0);
 }

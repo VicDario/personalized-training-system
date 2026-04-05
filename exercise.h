@@ -33,4 +33,6 @@ public:
     void setDurationMinutes(int durationMinutes);
 
     virtual void displayInfo() const;
+    virtual void updateExercise();
+    void showSummary() const;
 };

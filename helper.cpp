@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "helper.h"
 
 using namespace std;
@@ -33,4 +34,12 @@ string Helper::getIntensityName(ExerciseIntensity intensity)
     default:
         return "Desconocido";
     }
+}
+
+void Helper::cleanTerminal() {
+    #if defined(_WIN32) || defined(_WIN64)
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
