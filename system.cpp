@@ -4,11 +4,35 @@
 #include "workout-routine.h"
 #include "cardiovascular-exercise.h"
 #include "strength-exercise.h"
+#include "helper.h"
 
 using namespace std;
 
 System::System()
 {
+    currentWeek = 1;
+
+    exercises.push_back(new CardiovascularExercise(1, "Trote suave", "Carrera continua a ritmo bajo para mejorar resistencia base.", BASIC, 20, 120));
+    exercises.push_back(new CardiovascularExercise(2, "Ciclismo urbano", "Pedaleo moderado enfocado en control respiratorio y constancia.", INTERMEDIATE, 30, 135));
+    exercises.push_back(new CardiovascularExercise(3, "Sprints en pista", "Intervalos cortos de alta velocidad con pausas activas.", ADVANCED, 18, 160));
+    exercises.push_back(new CardiovascularExercise(4, "HIIT cardio", "Bloques intensos de trabajo cardiovascular con recuperación breve.", HIGH_PERFORMANCE, 25, 175));
+    exercises.push_back(new CardiovascularExercise(5, "Caminata inclinada", "Trabajo aeróbico continuo con inclinación moderada.", BASIC, 25, 118));
+    exercises.push_back(new CardiovascularExercise(6, "Remo ergometrico", "Sesión cardiovascular de cuerpo completo con ritmo sostenido.", INTERMEDIATE, 22, 140));
+    exercises.push_back(new CardiovascularExercise(7, "Escaladora", "Subida continua para mejorar capacidad cardiorrespiratoria.", ADVANCED, 20, 155));
+    exercises.push_back(new CardiovascularExercise(8, "Burpees por rondas", "Series exigentes de burpees con pausas cortas.", HIGH_PERFORMANCE, 16, 172));
+    exercises.push_back(new CardiovascularExercise(9, "Salto de cuerda", "Coordinación y resistencia con intervalos dinámicos.", INTERMEDIATE, 15, 145));
+    exercises.push_back(new CardiovascularExercise(10, "Fartlek", "Cambios de ritmo alternando tramos suaves e intensos.", ADVANCED, 28, 158));
+
+    exercises.push_back(new StrengthExercise(11, "Sentadillas", "Trabajo de tren inferior con enfoque en tecnica y control.", BASIC, 15, 20));
+    exercises.push_back(new StrengthExercise(12, "Press de pecho", "Ejercicio de empuje para desarrollar fuerza del torso.", INTERMEDIATE, 20, 35));
+    exercises.push_back(new StrengthExercise(13, "Peso muerto", "Levantamiento compuesto para cadena posterior y estabilidad.", ADVANCED, 25, 60));
+    exercises.push_back(new StrengthExercise(14, "Thrusters", "Movimiento explosivo combinado de sentadilla y press.", HIGH_PERFORMANCE, 20, 30));
+    exercises.push_back(new StrengthExercise(15, "Zancadas con mancuerna", "Fortalecimiento unilateral para piernas y equilibrio.", BASIC, 18, 16));
+    exercises.push_back(new StrengthExercise(16, "Remo con barra", "Ejercicio de tracción para espalda y brazos.", INTERMEDIATE, 22, 32));
+    exercises.push_back(new StrengthExercise(17, "Press militar", "Empuje vertical para hombros y estabilidad del core.", ADVANCED, 20, 28));
+    exercises.push_back(new StrengthExercise(18, "Clean and press", "Levantamiento compuesto de alta demanda técnica.", HIGH_PERFORMANCE, 18, 42));
+    exercises.push_back(new StrengthExercise(19, "Hip thrust", "Trabajo de glúteos y cadena posterior con carga controlada.", INTERMEDIATE, 17, 40));
+    exercises.push_back(new StrengthExercise(20, "Dominadas lastradas", "Ejercicio avanzado de tracción con carga adicional.", HIGH_PERFORMANCE, 14, 18));
 }
 
 System::~System()
@@ -21,12 +45,8 @@ System::~System()
 
 void System::createExercise()
 {
+    int tipo;
 
-    // Declaración de variables para la creación del ejercicio
-    int id, duration, tipo, intensityOption;
-    string name, description;
-
-    // Solicitar al usuario la información del nuevo ejercicio
     // Selecccionando el tipo de ejercicio
     cout << "Creando un nuevo ejercicio..." << endl;
     do
@@ -35,36 +55,14 @@ void System::createExercise()
         cin >> tipo;
     } while (tipo != 1 && tipo != 2);
 
-    cout << "Ingrese el ID del ejercicio: ";
-    cin >> id;
-    cin.ignore(1000, '\n');
-    cout << "Ingrese el nombre del ejercicio: ";
-    getline(cin, name);
-    cout << "Ingrese la descripción del ejercicio: ";
-    getline(cin, description);
-    cout << "Ingrese la duración del ejercicio en minutos: ";
-    cin >> duration;
-
-    do
-    {
-        cout << "Seleccione la intensidad del ejercicio: 1. Basica, 2. Intermedia, 3. Avanzada, 4. Alta-Performance" << endl;
-        cin >> intensityOption;
-    } while (intensityOption < 1 || intensityOption > 4);
-
-    // Casteando la intensidad con el ENUM de la clase ExerciseIntensity
-    ExerciseIntensity intensity = static_cast<ExerciseIntensity>(intensityOption - 1);
-
     // Creamos objeto de tipo Exercise de forma segura
     Exercise *newExercise = nullptr;
+    int id = exercises.empty() ? 1 : exercises.back()->getId() + 1;
 
     if (tipo == 1)
-    {
-        newExercise = new CardiovascularExercise(id, name, description, intensity, duration);
-    }
+        newExercise = CardiovascularExercise::createCardiovascularExercise(id);
     else if (tipo == 2)
-    {
-        newExercise = new StrengthExercise(id, name, description, intensity, duration);
-    }
+        newExercise = StrengthExercise::createStrengthExercise(id);
 
     if (newExercise != nullptr)
     {
@@ -72,9 +70,7 @@ void System::createExercise()
         cout << "Ejercicio creado exitosamente!" << endl;
     }
     else
-    {
         cout << "Error al crear el ejercicio. Tipo no válido." << endl;
-    }
 }
 
 void System::displayExercises()
@@ -89,9 +85,8 @@ void System::displayExercises()
     {
         cout << "Lista de ejercicios:" << endl;
         for (const Exercise *exercise : exercises)
-        {
             cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName() << endl;
-        }
+        // cout << exercise->getDescription() << endl;
     }
 }
 
@@ -129,10 +124,7 @@ void System::getExerciseInfo()
     {
         if (exercise->getId() == idToFind)
         {
-            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName()
-                 << ", Descripción: " << exercise->getDescription()
-                 << ", Intensidad: " << exercise->getIntensityName()
-                 << ", Duración: " << exercise->getDurationMinutes() << " minutos" << endl;
+            exercise->displayInfo();
             return; // Salimos de la función inmediatamente
         }
     }
@@ -189,7 +181,7 @@ void System::updateExercise()
 
             // 4. INTENSIDAD
             cout << "Nueva intensidad (1. Basica, 2. Intermedia, 3. Avanzada, 4. Alta-Performance)\n";
-            cout << "(Actual: " << exercise->getIntensityName() << ") [Enter para mantener]: ";
+            cout << "(Actual: " << Helper::getIntensityName(exercise->getIntensity()) << ") [Enter para mantener]: ";
             getline(cin, input);
             if (!input.empty())
             {
@@ -220,35 +212,139 @@ void System::updateExercise()
 
 void System::findExerciseByIntensity()
 {
-    int intensityOption;
+    ExerciseIntensity intensityToFind = Helper::getExerciseIntensityFromUser();
+    vector<Exercise *> foundExercises;
+    cout << "Ejercicios con intensidad " << Helper::getIntensityName(intensityToFind) << ":" << endl;
 
-    do
-    {
-        cout << "Seleccione la intensidad a buscar: 1. Basica, 2. Intermedia, 3. Avanzada, 4. Alta-Performance" << endl;
-        cin >> intensityOption;
-    } while (intensityOption < 1 || intensityOption > 4);
-
-    ExerciseIntensity intensityToFind = static_cast<ExerciseIntensity>(intensityOption - 1);
-
-    cout << "Ejercicios con intensidad " << exercises[0]->getIntensityName() << ":" << endl;
-    bool found = false;
     for (const Exercise *exercise : exercises)
     {
         if (exercise->getIntensity() == intensityToFind)
-        {
-            cout << "ID: " << exercise->getId() << ", Nombre: " << exercise->getName()
-                 << ", Descripción: " << exercise->getDescription()
-                 << ", Duración: " << exercise->getDurationMinutes() << " minutos" << endl;
-            found = true;
-        }
+            foundExercises.push_back(const_cast<Exercise *>(exercise));
+    }
 
-        if (!found)
-        {
-            cout << "No se encontraron ejercicios con esa intensidad." << endl;
-        }
+    if (foundExercises.empty())
+        cout << "No se encontraron ejercicios con esa intensidad." << endl;
+
+    for (const Exercise *exercise : foundExercises)
+    {
+        exercise->displayInfo();
+        cout << "-----------------------------" << endl;
     }
 }
 
-void System::createWorkoutRoutines()
+void System::createWorkoutRoutine()
 {
+    int week = this->workoutRoutines.size() + 1;
+    WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
+
+    vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
+
+    cout << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
+    int amountExercises;
+    cin.clear();
+    cin >> amountExercises;
+
+    ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
+
+    if (exercises.empty())
+    {
+        cout << "No hay ejercicios disponibles para crear una rutina." << endl;
+        return;
+    }
+
+    if (exercisesUsedLastWeek.empty())
+    {
+        for (Exercise *exercise : exercises) {
+            if (newRoutine->getExercisesInfo().size() == amountExercises)
+                break;
+            newRoutine->addExercise(exercise);
+        }
+    } else {
+        for (Exercise *exercise : exercises)
+        {
+            if (newRoutine->getExercisesInfo().size() == amountExercises)
+                break;
+
+            if (exercise->getIntensity() != intensity)
+                continue;
+            
+            bool alreadyUsed = false;
+            
+            for (Exercise *used : exercisesUsedLastWeek)
+            {
+                if (exercise->getId() == used->getId())
+                {
+                    alreadyUsed = true;
+                    break;
+                }
+            }
+
+            if (alreadyUsed)
+                continue;
+                
+            newRoutine->addExercise(exercise);
+        }
+    }
+
+
+    workoutRoutines.push_back(newRoutine);
+    cout << "Rutina de entrenamiento para la semana " << week << endl;
+    cout << "Duración total: " << newRoutine->getTotalDuration() << " minutos" << endl;
+    for (const Exercise *exercise : newRoutine->getExercisesInfo())
+    {
+        cout << "-----------------------------" << endl;
+        exercise->displayInfo();
+        cout << "-----------------------------" << endl;
+    }
+}
+
+void System::start()
+{
+    int option;
+
+    do
+    {
+        cout << "\n--- Menú Principal ---" << endl;
+        cout << "1. Crear ejercicio" << endl;
+        cout << "2. Mostrar ejercicios" << endl;
+        cout << "3. Eliminar ejercicio" << endl;
+        cout << "4. Consultar información de un ejercicio" << endl;
+        cout << "5. Actualizar ejercicio" << endl;
+        cout << "6. Buscar ejercicios por intensidad" << endl;
+        cout << "7. Crear rutina de entrenamiento semanal" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opción: ";
+        cin >> option;
+
+        switch (option)
+        {
+        case 1:
+            createExercise();
+            break;
+        case 2:
+            displayExercises();
+            break;
+        case 3:
+            deleteExercise();
+            break;
+        case 4:
+            getExerciseInfo();
+            break;
+        case 5:
+            updateExercise();
+            break;
+        case 6:
+            findExerciseByIntensity();
+            break;
+        case 7:
+            createWorkoutRoutine();
+            break;
+        case 0:
+            cout << "Saliendo del programa..." << endl;
+            break;
+        default:
+            cout << "Opción no válida. Intente nuevamente." << endl;
+            break;
+        }
+    } while (option != 0);
 }

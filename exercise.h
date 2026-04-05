@@ -1,6 +1,6 @@
+#pragma once
 #include <iostream>
 #include "exercise-intensity.h"
-#pragma once
 
 using namespace std;
 
@@ -31,4 +31,6 @@ public:
     void setDescription(string description);
     void setIntensity(ExerciseIntensity intensity);
     void setDurationMinutes(int durationMinutes);
+
+    virtual void displayInfo() const;
 };
