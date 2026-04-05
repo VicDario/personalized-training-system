@@ -288,10 +288,20 @@ void System::createWorkoutRoutine()
         }
     }
 
+    if (newRoutine->getExercisesInfo().size() < amountExercises)
+    {
+        int missingExercises = amountExercises - newRoutine->getExercisesInfo().size();
+        cout << "No hay ejercicios disponibles para la rutina con los criterios seleccionados." << endl;
+        cout << "Pruebe con otra intensidad o cantidad de ejercicios." << endl;
+        cout << "Ejercicios faltantes: " << missingExercises << endl;
+        delete newRoutine;
+        return;
+    }
 
     workoutRoutines.push_back(newRoutine);
     cout << "Rutina de entrenamiento para la semana " << week << endl;
     cout << "Duración total: " << newRoutine->getTotalDuration() << " minutos" << endl;
+
     for (const Exercise *exercise : newRoutine->getExercisesInfo())
     {
         cout << "-----------------------------" << endl;
