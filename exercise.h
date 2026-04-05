@@ -12,6 +12,7 @@ private:
     string description;
     ExerciseIntensity intensity;
     int durationMinutes;
+    int lastUsedWeek;
 
 public:
     Exercise(int id, string name, string description, ExerciseIntensity intensity, int durationMinutes);
@@ -24,6 +25,7 @@ public:
     ExerciseIntensity getIntensity() const;
     string getIntensityName() const;
     int getDurationMinutes() const;
+    int getLastUsedWeek() const;
 
     // Setters
     void setId(int id);
@@ -31,6 +33,7 @@ public:
     void setDescription(string description);
     void setIntensity(ExerciseIntensity intensity);
     void setDurationMinutes(int durationMinutes);
+    void setLastUsedWeek(int week);
 
     virtual void displayInfo() const;
     virtual void updateExercise();
