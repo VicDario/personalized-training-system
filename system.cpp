@@ -103,7 +103,7 @@ void System::deleteExercise()
             exercises.erase(it);
 
             cout << "Ejercicio eliminado exitosamente." << endl;
-            return; // Salimos de la función inmediatamente
+            return;
         }
     }
     cout << "No se encontro un ejercicio con ese ID." << endl;
@@ -120,7 +120,7 @@ void System::getExerciseInfo()
         if (exercise->getId() == idToFind)
         {
             exercise->displayInfo();
-            return; // Salimos de la función inmediatamente
+            return;
         }
     }
     cout << "No se encontro un ejercicio con ese ID." << endl;
