@@ -306,20 +306,7 @@ void System::createWorkoutRoutine(Client *client)
     cin.clear();
     cin >> amountExercises;
 
-    int exerciseType;
-    do
-    {
-        cout << "Seleccione el tipo de ejercicio: 1. Cardiovascular, 2. Fuerza, 3. Ambos: ";
-        cin >> exerciseType;
-    } while (exerciseType < 1 || exerciseType > 3);
-
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
-
-    auto matchesType = [&](Exercise *exercise) -> bool {
-        if (exerciseType == 1) return dynamic_cast<CardiovascularExercise *>(exercise) != nullptr;
-        if (exerciseType == 2) return dynamic_cast<StrengthExercise *>(exercise) != nullptr;
-        return true; // ambos
-    };
 
     if (exercisesUsedLastWeek.empty())
     {
@@ -329,9 +316,6 @@ void System::createWorkoutRoutine(Client *client)
                 break;
 
             if (exercise->getIntensity() != intensity)
-                continue;
-
-            if (!matchesType(exercise))
                 continue;
 
             newRoutine->addExercise(exercise);
@@ -345,9 +329,6 @@ void System::createWorkoutRoutine(Client *client)
                 break;
 
             if (exercise->getIntensity() != intensity)
-                continue;
-
-            if (!matchesType(exercise))
                 continue;
 
             bool alreadyUsed = false;
