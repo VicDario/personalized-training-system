@@ -4,14 +4,13 @@
 #include "workout-routine.h"
 #include "cardiovascular-exercise.h"
 #include "strength-exercise.h"
+#include "client.h"
 #include "helper.h"
 
 using namespace std;
 
 System::System()
 {
-    currentWeek = 1;
-
     exercises.push_back(new CardiovascularExercise(1, "Trote suave", "Carrera continua a ritmo bajo para mejorar resistencia base.", BASIC, 20, 120));
     exercises.push_back(new CardiovascularExercise(2, "Ciclismo urbano", "Pedaleo moderado enfocado en control respiratorio y constancia.", INTERMEDIATE, 30, 135));
     exercises.push_back(new CardiovascularExercise(3, "Sprints en pista", "Intervalos cortos de alta velocidad con pausas activas.", ADVANCED, 18, 160));
@@ -38,14 +37,10 @@ System::System()
 System::~System()
 {
     for (Exercise *exercise : exercises)
-    {
         delete exercise;
-    }
 
-    for (WorkoutRoutine *routine : workoutRoutines)
-    {
-        delete routine;
-    }
+    for (Client *client : clients)
+        delete client;
 }
 
 void System::createExercise()
@@ -177,17 +172,100 @@ void System::findExerciseByIntensity()
     }
 }
 
-void System::displayWorkoutRoutines()
+void System::createClient()
 {
-    if (workoutRoutines.empty())
+    string name, rut;
+
+    cout << "Ingrese el nombre del cliente: ";
+    cin.ignore(1000, '\n');
+    cin.clear();
+    getline(cin, name);
+
+    cout << "Ingrese el RUT del cliente: ";
+    cin.clear();
+    getline(cin, rut);
+
+    clients.push_back(new Client(name, rut));
+    cout << "Cliente creado exitosamente." << endl;
+}
+
+void System::selectClient()
+{
+    if (clients.empty())
     {
-        cout << "No hay rutinas creadas." << endl;
+        cout << "No hay clientes registrados." << endl;
         return;
     }
 
-    cout << "Rutinas de entrenamiento creadas:" << endl;
+    cout << "Clientes registrados:" << endl;
+    for (int i = 0; i < clients.size(); i++)
+        cout << i + 1 << ". " << clients[i]->getName() << " - RUT: " << clients[i]->getRut() << endl;
 
-    for (const WorkoutRoutine *routine : workoutRoutines)
+    cout << "Seleccione un cliente: ";
+    int option;
+    cin >> option;
+
+    if (option < 1 || option > clients.size())
+    {
+        cout << "Opcion no valida." << endl;
+        return;
+    }
+
+    clientMenu(clients[option - 1]);
+}
+
+void System::clientMenu(Client *client)
+{
+    int option;
+    do
+    {
+        Helper::cleanTerminal();
+        cout << "\n--- Cliente: " << client->getName() << " | RUT: " << client->getRut() << " ---" << endl;
+        cout << "1. Crear rutina de entrenamiento" << endl;
+        cout << "2. Ver rutinas creadas" << endl;
+        cout << "0. Volver" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> option;
+
+        Helper::cleanTerminal();
+
+        switch (option)
+        {
+        case 1:
+            createWorkoutRoutine(client);
+            break;
+        case 2:
+            displayWorkoutRoutines(client);
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion no valida." << endl;
+            break;
+        }
+
+        if (option != 0)
+        {
+            getchar();
+            cout << "Presione Enter para continuar...";
+            cin.clear();
+            cin.get();
+        }
+    } while (option != 0);
+}
+
+void System::displayWorkoutRoutines(Client *client)
+{
+    if (client->getWorkoutRoutines().empty())
+    {
+        cout << "El cliente " << client->getName() << " no tiene rutinas creadas." << endl;
+        return;
+    }
+
+    cout << "Rutinas de " << client->getName() << ":" << endl;
+
+    for (const WorkoutRoutine *routine : client->getWorkoutRoutines())
     {
         cout << "=============================" << endl;
         cout << "Semana: " << routine->getWeek() << endl;
@@ -203,7 +281,7 @@ void System::displayWorkoutRoutines()
     cout << "=============================" << endl;
 }
 
-void System::createWorkoutRoutine()
+void System::createWorkoutRoutine(Client *client)
 {
     if (exercises.empty())
     {
@@ -211,10 +289,12 @@ void System::createWorkoutRoutine()
         return;
     }
 
-    int week = this->currentWeek;
+    int week = client->getCurrentWeek();
     WorkoutRoutine *newRoutine = new WorkoutRoutine(week);
 
-    vector<Exercise *> exercisesUsedLastWeek = this->workoutRoutines.empty() ? vector<Exercise *>() : this->workoutRoutines.back()->getExercisesInfo();
+    vector<Exercise *> exercisesUsedLastWeek = client->getWorkoutRoutines().empty()
+                                                   ? vector<Exercise *>()
+                                                   : client->getWorkoutRoutines().back()->getExercisesInfo();
 
     cout << endl
          << "Ingrese cantidad de ejercicios deseado para la rutina de la semana " << week << ": ";
@@ -224,8 +304,6 @@ void System::createWorkoutRoutine()
 
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
 
-    // Si no hay ejercicios usados la semana pasada
-    // llenamos la rutina con los primeros ejercicios disponibles que coincidan con la intensidad solicitada
     if (exercisesUsedLastWeek.empty())
     {
         for (Exercise *exercise : exercises)
@@ -279,8 +357,8 @@ void System::createWorkoutRoutine()
         return;
     }
 
-    workoutRoutines.push_back(newRoutine);
-    this->currentWeek++;
+    client->addWorkoutRoutine(newRoutine);
+    client->incrementWeek();
     cout << "Rutina de entrenamiento para la semana " << week << endl;
     cout << "Duración total: " << newRoutine->getTotalDuration() << " minutos" << endl;
 
@@ -307,8 +385,8 @@ void System::start()
         cout << "4. Consultar información de un ejercicio" << endl;
         cout << "5. Actualizar ejercicio" << endl;
         cout << "6. Buscar ejercicios por intensidad" << endl;
-        cout << "7. Crear rutina de entrenamiento semanal" << endl;
-        cout << "8. Ver rutinas creadas" << endl;
+        cout << "7. Crear cliente" << endl;
+        cout << "8. Seleccionar cliente" << endl;
         cout << "0. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> option;
@@ -336,10 +414,10 @@ void System::start()
             findExerciseByIntensity();
             break;
         case 7:
-            createWorkoutRoutine();
+            createClient();
             break;
         case 8:
-            displayWorkoutRoutines();
+            selectClient();
             break;
         case 0:
             cout << "Saliendo del programa..." << endl;

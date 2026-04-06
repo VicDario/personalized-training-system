@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "exercise.h"
-#include "workout-routine.h"
+#include "client.h"
 
 using namespace std;
 
@@ -9,8 +9,7 @@ class System
 {
 private:
     vector<Exercise *> exercises;
-    vector<WorkoutRoutine *> workoutRoutines;
-    int currentWeek;
+    vector<Client *> clients;
 
 public:
     System();
@@ -24,6 +23,9 @@ private:
     void displayExercises();
     void getExerciseInfo();
     void findExerciseByIntensity();
-    void createWorkoutRoutine();
-    void displayWorkoutRoutines();
+    void createClient();
+    void selectClient();
+    void clientMenu(Client *client);
+    void createWorkoutRoutine(Client *client);
+    void displayWorkoutRoutines(Client *client);
 };
