@@ -279,9 +279,6 @@ void System::createWorkoutRoutine()
         return;
     }
 
-    for (Exercise *exercise : newRoutine->getExercisesInfo())
-        exercise->setLastUsedWeek(week);
-
     workoutRoutines.push_back(newRoutine);
     this->currentWeek++;
     cout << "Rutina de entrenamiento para la semana " << week << endl;
