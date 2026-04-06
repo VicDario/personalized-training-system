@@ -25,4 +25,5 @@ private:
     void getExerciseInfo();
     void findExerciseByIntensity();
     void createWorkoutRoutine();
+    void displayWorkoutRoutines();
 };

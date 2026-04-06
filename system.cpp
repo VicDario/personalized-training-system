@@ -177,6 +177,32 @@ void System::findExerciseByIntensity()
     }
 }
 
+void System::displayWorkoutRoutines()
+{
+    if (workoutRoutines.empty())
+    {
+        cout << "No hay rutinas creadas." << endl;
+        return;
+    }
+
+    cout << "Rutinas de entrenamiento creadas:" << endl;
+
+    for (const WorkoutRoutine *routine : workoutRoutines)
+    {
+        cout << "=============================" << endl;
+        cout << "Semana: " << routine->getWeek() << endl;
+        cout << "Duración total: " << routine->getTotalDuration() << " minutos" << endl;
+        cout << "Ejercicios:" << endl;
+
+        for (const Exercise *exercise : routine->getExercisesInfo())
+        {
+            cout << "-----------------------------" << endl;
+            exercise->displayInfo();
+        }
+    }
+    cout << "=============================" << endl;
+}
+
 void System::createWorkoutRoutine()
 {
     if (exercises.empty())
@@ -211,7 +237,6 @@ void System::createWorkoutRoutine()
                 continue;
 
             newRoutine->addExercise(exercise);
-            exercise->setLastUsedWeek(week);
         }
     }
     else
@@ -239,7 +264,6 @@ void System::createWorkoutRoutine()
                 continue;
 
             newRoutine->addExercise(exercise);
-            exercise->setLastUsedWeek(week);
         }
     }
 
@@ -254,6 +278,9 @@ void System::createWorkoutRoutine()
         delete newRoutine;
         return;
     }
+
+    for (Exercise *exercise : newRoutine->getExercisesInfo())
+        exercise->setLastUsedWeek(week);
 
     workoutRoutines.push_back(newRoutine);
     this->currentWeek++;
@@ -284,6 +311,7 @@ void System::start()
         cout << "5. Actualizar ejercicio" << endl;
         cout << "6. Buscar ejercicios por intensidad" << endl;
         cout << "7. Crear rutina de entrenamiento semanal" << endl;
+        cout << "8. Ver rutinas creadas" << endl;
         cout << "0. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> option;
@@ -312,6 +340,9 @@ void System::start()
             break;
         case 7:
             createWorkoutRoutine();
+            break;
+        case 8:
+            displayWorkoutRoutines();
             break;
         case 0:
             cout << "Saliendo del programa..." << endl;
