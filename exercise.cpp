@@ -9,7 +9,6 @@ Exercise::Exercise(int id, string name, string description, ExerciseIntensity in
     this->description = description;
     this->intensity = intensity;
     this->durationMinutes = durationMinutes;
-    this->lastUsedWeek = 0;
 }
 
 Exercise::~Exercise() {}
@@ -38,16 +37,6 @@ ExerciseIntensity Exercise::getIntensity() const
 int Exercise::getDurationMinutes() const
 {
     return durationMinutes;
-}
-
-int Exercise::getLastUsedWeek() const
-{
-    return lastUsedWeek;
-}
-
-void Exercise::setLastUsedWeek(int week)
-{
-    this->lastUsedWeek = week;
 }
 
 // Setters
@@ -83,10 +72,6 @@ void Exercise::displayInfo() const
     cout << "Descripción: " << description << endl;
     cout << "Intensidad: " << Helper::getIntensityName(intensity) << endl;
     cout << "Duración: " << durationMinutes << " minutos" << endl;
-    if (lastUsedWeek == 0)
-        cout << "Última semana de uso: nunca utilizado" << endl;
-    else
-        cout << "Última semana de uso: semana " << lastUsedWeek << endl;
 }
 
 void Exercise::showSummary() const
