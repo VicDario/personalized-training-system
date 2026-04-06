@@ -1,10 +1,16 @@
 #include "client.h"
 
-Client::Client(string name, string rut)
+Client::Client(int id, string name, string rut)
 {
+    this->id = id;
     this->name = name;
     this->rut = rut;
     this->currentWeek = 1;
+}
+
+int Client::getId() const
+{
+    return id;
 }
 
 Client::~Client()

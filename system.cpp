@@ -185,8 +185,11 @@ void System::createClient()
     cin.clear();
     getline(cin, rut);
 
-    clients.push_back(new Client(name, rut));
+    int id = clients.empty() ? 1 : clients.back()->getId() + 1;
+    Client *newClient = new Client(id, name, rut);
+    clients.push_back(newClient);
     cout << "Cliente creado exitosamente." << endl;
+    clientMenu(newClient);
 }
 
 void System::selectClient()
@@ -197,21 +200,22 @@ void System::selectClient()
         return;
     }
 
-    cout << "Clientes registrados:" << endl;
-    for (int i = 0; i < clients.size(); i++)
-        cout << i + 1 << ". " << clients[i]->getName() << " - RUT: " << clients[i]->getRut() << endl;
+    cout << "Ingrese el RUT del cliente: ";
+    string rut;
+    cin.clear();
+    cin.ignore(1000, '\n');
+    getline(cin, rut);
 
-    cout << "Seleccione un cliente: ";
-    int option;
-    cin >> option;
-
-    if (option < 1 || option > clients.size())
+    for (Client *client : clients)
     {
-        cout << "Opcion no valida." << endl;
-        return;
+        if (client->getRut() == rut)
+        {
+            clientMenu(client);
+            return;
+        }
     }
 
-    clientMenu(clients[option - 1]);
+    cout << "No se encontro un cliente con el RUT " << rut << "." << endl;
 }
 
 void System::clientMenu(Client *client)
@@ -302,7 +306,20 @@ void System::createWorkoutRoutine(Client *client)
     cin.clear();
     cin >> amountExercises;
 
+    int exerciseType;
+    do
+    {
+        cout << "Seleccione el tipo de ejercicio: 1. Cardiovascular, 2. Fuerza, 3. Ambos: ";
+        cin >> exerciseType;
+    } while (exerciseType < 1 || exerciseType > 3);
+
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
+
+    auto matchesType = [&](Exercise *exercise) -> bool {
+        if (exerciseType == 1) return dynamic_cast<CardiovascularExercise *>(exercise) != nullptr;
+        if (exerciseType == 2) return dynamic_cast<StrengthExercise *>(exercise) != nullptr;
+        return true; // ambos
+    };
 
     if (exercisesUsedLastWeek.empty())
     {
@@ -312,6 +329,9 @@ void System::createWorkoutRoutine(Client *client)
                 break;
 
             if (exercise->getIntensity() != intensity)
+                continue;
+
+            if (!matchesType(exercise))
                 continue;
 
             newRoutine->addExercise(exercise);
@@ -325,6 +345,9 @@ void System::createWorkoutRoutine(Client *client)
                 break;
 
             if (exercise->getIntensity() != intensity)
+                continue;
+
+            if (!matchesType(exercise))
                 continue;
 
             bool alreadyUsed = false;

@@ -8,13 +8,15 @@ using namespace std;
 class Client
 {
 private:
+    int id;
     string name;
     string rut;
     vector<WorkoutRoutine *> workoutRoutines;
     int currentWeek;
 
 public:
-    Client(string name, string rut);
+    Client(int id, string name, string rut);
+    int getId() const;
     ~Client();
 
     string getName() const;
