@@ -345,7 +345,8 @@ void System::createWorkoutRoutine(Client *client)
             if (alreadyUsed)
                 continue;
 
-            newRoutine->addExercise(exercise);
+            Exercise* clonedExercise = exercise->clone();
+            newRoutine->addExercise(clonedExercise);
         }
     }
 
