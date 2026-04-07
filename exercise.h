@@ -34,4 +34,6 @@ public:
     virtual void displayInfo() const;
     virtual void updateExercise();
     void showSummary() const;
+
+    virtual Exercise* clone() const;
 };
