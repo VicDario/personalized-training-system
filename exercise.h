@@ -35,5 +35,5 @@ public:
     virtual void updateExercise();
     void showSummary() const;
 
-    virtual Exercise* clone() const;
+    virtual Exercise* clone() const = 0;
 };
