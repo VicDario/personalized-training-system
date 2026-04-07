@@ -55,6 +55,7 @@ void StrengthExercise::updateExercise()
         weight = newWeight;
 }
 
-Exercise* StrengthExercise::clone() const {
+Exercise* StrengthExercise::clone() const
+{
     return new StrengthExercise(*this);
 }
