@@ -22,7 +22,6 @@ public:
     string getName() const;
     string getDescription() const;
     ExerciseIntensity getIntensity() const;
-    string getIntensityName() const;
     int getDurationMinutes() const;
 
     // Setters
