@@ -308,29 +308,18 @@ void System::createWorkoutRoutine(Client *client)
 
     ExerciseIntensity intensity = Helper::getExerciseIntensityFromUser();
 
-    if (exercisesUsedLastWeek.empty())
+    for (Exercise *exercise : exercises)
     {
-        for (Exercise *exercise : exercises)
+        if (newRoutine->getExercisesInfo().size() == amountExercises)
+            break;
+
+        if (exercise->getIntensity() != intensity)
+            continue;
+
+        // Si lista de ejercicios de la semana pasada no esta vacia,
+        // verificamos que el ejercicio actual no haya sido usado en la rutina anterior
+        if (!exercisesUsedLastWeek.empty())
         {
-            if (newRoutine->getExercisesInfo().size() == amountExercises)
-                break;
-
-            if (exercise->getIntensity() != intensity)
-                continue;
-
-            newRoutine->addExercise(exercise);
-        }
-    }
-    else
-    {
-        for (Exercise *exercise : exercises)
-        {
-            if (newRoutine->getExercisesInfo().size() == amountExercises)
-                break;
-
-            if (exercise->getIntensity() != intensity)
-                continue;
-
             bool alreadyUsed = false;
 
             for (Exercise *used : exercisesUsedLastWeek)
@@ -344,10 +333,10 @@ void System::createWorkoutRoutine(Client *client)
 
             if (alreadyUsed)
                 continue;
-
-            Exercise* clonedExercise = exercise->clone();
-            newRoutine->addExercise(clonedExercise);
         }
+        
+        Exercise* clonedExercise = exercise->clone();
+        newRoutine->addExercise(clonedExercise);
     }
 
     cout << endl;
