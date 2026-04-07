@@ -316,7 +316,7 @@ void System::createWorkoutRoutine(Client *client)
         if (exercise->getIntensity() != intensity)
             continue;
 
-        // Si lista de ejercicios de la semana pasada no esta vacia,
+        // Si la lista de ejercicios de la semana pasada no está vacía,
         // verificamos que el ejercicio actual no haya sido usado en la rutina anterior
         if (!exercisesUsedLastWeek.empty())
         {
