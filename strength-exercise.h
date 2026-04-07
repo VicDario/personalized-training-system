@@ -16,4 +16,5 @@ public:
     void updateExercise() override;
 
     static StrengthExercise *createStrengthExercise(int id);
+    Exercise* clone() const override;
 };

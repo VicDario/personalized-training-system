@@ -16,4 +16,5 @@ public:
     void updateExercise() override;
 
     static CardiovascularExercise *createCardiovascularExercise(int id);
+    Exercise* clone() const override;
 };

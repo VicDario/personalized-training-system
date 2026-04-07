@@ -54,3 +54,8 @@ void StrengthExercise::updateExercise()
     if (newWeight > 0)
         weight = newWeight;
 }
+
+Exercise* StrengthExercise::clone() const
+{
+    return new StrengthExercise(*this);
+}

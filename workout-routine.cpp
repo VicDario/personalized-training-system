@@ -9,7 +9,12 @@ WorkoutRoutine::WorkoutRoutine(int week)
     this->exercises = vector<Exercise *>();
 }
 
-WorkoutRoutine::~WorkoutRoutine() { exercises.clear(); }
+WorkoutRoutine::~WorkoutRoutine() { 
+    for (Exercise* exercise : exercises)
+        delete exercise;
+    
+    exercises.clear();
+}
 
 int WorkoutRoutine::getTotalDuration() const
 {

@@ -55,3 +55,8 @@ void CardiovascularExercise::updateExercise()
     if (newHeartRate > 0)
         recommendedHeartRate = newHeartRate;
 }
+
+Exercise* CardiovascularExercise::clone() const
+{
+    return new CardiovascularExercise(*this);
+}
